@@ -1,0 +1,82 @@
+enableDebugConsole = 1;
+respawn = 3;
+respawnDelay = 3;
+respawnDialog = 0;
+respawnOnStart = 0;
+disabledAI=1;
+
+class CfgMusic
+{
+	tracks[]={};
+
+	class PointWest
+	{
+		name = "";
+		sound[] = {"\Sound\point_west.ogg", db+0, 1.0};
+	};
+	
+	class PointEast
+	{
+		name = "";
+		sound[] = {"\Sound\point_east.ogg", db+0, 1.0};
+	};
+	
+	class PointNone
+	{
+		name = "";
+		sound[] = {"\Sound\point_none.ogg", db+0, 1.0};
+	};
+	
+	class Three
+	{
+		name = "";
+		sound[] = {"\Sound\point_none.ogg", db+0, 1.0};
+	};
+	class Two
+	{
+		name = "";
+		sound[] = {"\Sound\two.ogg", db+0, 1.0};
+	};
+	class One
+	{
+		name = "";
+		sound[] = {"\Sound\one.ogg", db+0, 1.0};
+	};
+	
+	class WinEast
+	{
+		name = "";
+		sound[] = {"\Sound\win_east.ogg", db+0, 1.0};
+	};
+	class WinWest
+	{
+		name = "";
+		sound[] = {"\Sound\win_west.ogg", db+0, 1.0};
+	};
+	class WinNone
+	{
+		name = "";
+		sound[] = {"\Sound\win_none.ogg", db+0, 1.0};
+	};
+	
+	class Gogo
+	{
+		name = "";
+		sound[] = {"\Sound\gogo.ogg", db+0, 1.0};
+	};
+};
+
+class CfgSounds
+{
+	sounds[] = {};
+	
+	class FlagTaken
+	{
+		// how the sound is referred to in the editor (e.g. trigger effects)
+		name = "Flag Taken";
+		// filename, volume, pitch
+		sound[] = {"\Sound\flagtaken.ogg", 1, 1};
+		// subtitle delay in seconds, subtitle text 
+		titles[] = {1, ""};
+	};
+};
