@@ -1,12 +1,14 @@
+//removes bodies on respawn
+_null = player addMPEventHandler ["MPRespawn", {deleteVehicle (_this select 1)}];
 
-[] spawn
+//for JIP
+if (gameStart) then
 {
-	while {true} do
-	{
-
-		sleep 0.5;
-	};
-
-
+	startLoadingScreen ["The round is still in progress, it'll be a minute..."];
+	waitUntil { sleep 0.1; !gameStart };
+	endLoadingScreen;
+} else
+{
+	_null spawn fnc_resetMP;
 };
 

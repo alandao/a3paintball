@@ -1,9 +1,11 @@
 enableDebugConsole = 1;
 respawn = 3;
-respawnDelay = 3;
+respawnDelay = 99999999;
 respawnDialog = 0;
 respawnOnStart = 0;
 disabledAI=1;
+
+respawnTemplates[] = {"Spectator"};
 
 class CfgMusic
 {
@@ -30,7 +32,7 @@ class CfgMusic
 	class Three
 	{
 		name = "";
-		sound[] = {"\Sound\point_none.ogg", db+0, 1.0};
+		sound[] = {"\Sound\three.ogg", db+0, 1.0};
 	};
 	class Two
 	{
