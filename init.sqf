@@ -20,7 +20,6 @@ fnc_resetMP = {
 	setPlayerRespawnTime -1;
 	waitUntil{ alive player };
 	setPlayerRespawnTime 99999999;
-	player cameraEffect ["terminate","back"];
 	player setDamage 0;
 	removeAllWeapons player;
 	player addMagazines["30Rnd_556x45_Stanag",3];
@@ -40,27 +39,24 @@ fnc_resetMP = {
 
 fnc_startMP = {
 	player enableSimulation true;
+	player cameraEffect ["terminate","back"];
 	playMusic "Gogo";
 };
 
-fnc_soundPointEast = {
-	playMusic "pointEast";
-};
-
-fnc_soundPointWest = {
-	playMusic "pointWest";
-};
 
 fnc_soundThree = {
 	playMusic "Three";
+	execVM "cin_three.sqf";
 };
 
 fnc_soundTwo = {
 	playMusic "Two";
+	execVM "cin_two.sqf";
 };
 
 fnc_soundOne = {
 	playMusic "One";
+	execVM "cin_one.sqf";
 };
 
 fnc_soundFlagTaken = {
@@ -88,6 +84,14 @@ if (isServer) then
 	if (isNil "gameStart") then
 	{
 		gameStart = False;
+	};
+	if (isNil "westWins") then
+	{
+		westWins = 0;
+	};
+	if (isNil "eastWins") then
+	{
+		eastWins = 0;
 	};
 	_null = execVM "mission_client.sqf";
 };

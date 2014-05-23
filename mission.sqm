@@ -235,7 +235,7 @@ class Mission
 	};
 	class Vehicles
 	{
-		items=112;
+		items=116;
 		class Item0
 		{
 			position[]={23460.715,3.1900001,18729.098};
@@ -1250,6 +1250,48 @@ class Mission
 			side="EMPTY";
 			vehicle="Land_HBarrier_3_F";
 			skill=0.60000002;
+		};
+		class Item112
+		{
+			position[]={23463.611,3.1900001,18721.172};
+			id=122;
+			side="EMPTY";
+			vehicle="Land_CncWall1_F";
+			leader=1;
+			skill=0.60000002;
+			description="Paintballer";
+		};
+		class Item113
+		{
+			position[]={23473.814,3.1900001,18721.209};
+			id=123;
+			side="EMPTY";
+			vehicle="Land_CncWall1_F";
+			leader=1;
+			skill=0.60000002;
+			description="Paintballer";
+		};
+		class Item114
+		{
+			position[]={23473.828,3.1900001,18761.762};
+			azimut=180;
+			id=124;
+			side="EMPTY";
+			vehicle="Land_CncWall1_F";
+			leader=1;
+			skill=0.60000002;
+			description="Paintballer";
+		};
+		class Item115
+		{
+			position[]={23463.623,3.1900001,18761.762};
+			azimut=180;
+			id=125;
+			side="EMPTY";
+			vehicle="Land_CncWall1_F";
+			leader=1;
+			skill=0.60000002;
+			description="Paintballer";
 		};
 	};
 	class Markers

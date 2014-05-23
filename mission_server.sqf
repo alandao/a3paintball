@@ -76,10 +76,11 @@ _null = execVM "resetRound.sqf";
 			{
 				eastRound = true;
 				eastWins = eastWins + 1;
+				publicVariable "eastWins";
 				
-				//plays music
-				[nil, "fnc_soundPointEast"] call BIS_fnc_MP;
-				
+				//cinematic
+				["cin_eastround.sqf","BIS_fnc_execVM"] spawn BIS_fnc_MP;
+
 				sleep 10;
 				_null = execVM "resetRound.sqf";
 
@@ -90,10 +91,10 @@ _null = execVM "resetRound.sqf";
 			{
 				westRound = true;
 				westWins = westWins + 1;
+				publicVariable "westWins";
 				
-				//plays music
-				[nil, "fnc_soundPointWest"] call BIS_fnc_MP;
-				
+				["cin_westround.sqf","BIS_fnc_execVM"] spawn BIS_fnc_MP;
+
 				sleep 10;
 				_null = execVM "resetRound.sqf";
 
@@ -103,24 +104,26 @@ _null = execVM "resetRound.sqf";
 			{
 				westRound = true;
 				westWins = westWins + 1;
+				publicVariable "westWins";
 				
-				//plays music
-				[nil, "fnc_soundPointWest"] call BIS_fnc_MP;
+
+				["cin_westroundflag.sqf","BIS_fnc_execVM"] spawn BIS_fnc_MP;
 				
 				sleep 10;
-				_null = execVM "resetRound.sqf";				
+				_null = execVM "resetRound.sqf";			
+				
 			};
 			
 			if (!(isNil "flagBearer") and {(side flagBearer == EAST)} and {flagWhite distance flagEast < 4}) then
 			{
 				eastRound = true;
 				eastWins = eastWins + 1;
+				publicVariable "eastWins";
 				
-				//plays music
-				[nil, "fnc_soundPointEast"] call BIS_fnc_MP;
 				["cin_eastroundflag.sqf","BIS_fnc_execVM"] spawn BIS_fnc_MP;
 				sleep 10;
-				_null = execVM "resetRound.sqf";				
+				_null = execVM "resetRound.sqf";
+				
 			};
 			
 			{
@@ -128,14 +131,14 @@ _null = execVM "resetRound.sqf";
 				{
 					flagWhite attachTo [_x, [0,0,0.5]];
 					flagBearer = _x;
-					[nil, "fnc_soundFlagTaken"] call BIS_fnc_MP;
+					[nil, "fnc_soundFlagTaken"] spawn BIS_fnc_MP;
 					if (side flagBearer == WEST) then
 					{
-						[nil, "fnc_hintWestFlag"] call BIS_fnc_MP;
+						[nil, "fnc_hintWestFlag"] spawn BIS_fnc_MP;
 						
 					} else
 					{
-						[nil, "fnc_hintEastFlag"] call BIS_fnc_MP;
+						[nil, "fnc_hintEastFlag"] spawn BIS_fnc_MP;
 					};
 					
 				};

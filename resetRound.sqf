@@ -8,8 +8,11 @@ detach flagWhite;
 flagWhite setPos [23469.3,18741.1,0];
 
 
+
 //respawn and freeze
 [nil, "fnc_resetMP"] call BIS_fnc_MP;
+
+
 
 paintBallers = [];
 paintBallersWest = [];
