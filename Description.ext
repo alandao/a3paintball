@@ -1,3 +1,7 @@
+#include "defines.hpp"
+#include "dialogs.hpp"
+
+
 enableDebugConsole = 1;
 respawn = 3;
 respawnDelay = 99999999;
@@ -80,5 +84,17 @@ class CfgSounds
 		sound[] = {"\Sound\flagtaken.ogg", 1, 1};
 		// subtitle delay in seconds, subtitle text 
 		titles[] = {1, ""};
+	};
+};
+
+class CfgFunctions
+{
+	class paintball
+	{
+		class myCategory
+		{
+			class mirrorVehicle {file = "fn_mirrorVehicle.sqf";};
+		};
+		
 	};
 };

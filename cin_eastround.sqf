@@ -5,10 +5,11 @@ showCinemaBorder true;
 _camera = "camera" camCreate [0,0,0];
 _camera cameraEffect ["internal", "back"];
 
-_camera camSetTarget [23510.29,-74515.86,-35998.49];
-_camera camSetPos [23468.78,18774.26,11.47];
-_camera camSetFOV 0.700;
+_camera camSetTarget [22504.71,-80568.84,-11373.03];
+_camera camSetPos [23468.83,18776.45,7.24];
+_camera camSetFOV 0.7;
 _camera camCommit 0;
+
 
 
 
