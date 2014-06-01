@@ -1,10 +1,12 @@
 playerList = [];
 botsEnabled = true;
+pointLimit = 5;
 botList = [];
 groupWest = createGroup west;
 groupEast = createGroup east;
 
 flagTakenOnce = false;
+gameOver = false;
 
 //when player connects.
 _playerConnects = ["id1", "onPlayerConnected", {
@@ -42,7 +44,6 @@ host_fnc_findPlayer = {
 
 
 
-bestOf = 7;
 westWins = 0;
 eastWins = 0;
 gameStart = false;
@@ -61,7 +62,13 @@ flagEast =  createVehicle ["Flag_CSAT_F",[respawnEast select 0, (respawnEast sel
 
 _null = execVM "resetRound.sqf";
 
-
+//get updated positions for client.
+posFlagWhite = getPos flagWhite;
+publicVariable "posFlagWhite";
+posFlagWest = getPos flagWest;
+publicVariable "posFlagWest";
+posFlagEast = getPos flagEast;
+publicVariable "posFlagEast";
 
 //200 is how big our map is going to be
 objectsToMirror = [];
@@ -74,12 +81,13 @@ waitUntil{ ({alive _x} count playableUnits) == (count playerList) };
 	[_x, flagWhite] call paintball_fnc_mirrorVehicle;
 } forEach objectsToMirror;
 
-
 //MISSION LOGIC
 [] spawn
 {
-	while {true} do
+	while {!gameOver} do
 	{
+	
+
 		//get amount for player HUD
 		countWest = {alive _x} count paintBallersWest;
 		countEast = {alive _x} count paintBallersEast;
@@ -87,15 +95,28 @@ waitUntil{ ({alive _x} count playableUnits) == (count playerList) };
 		publicVariable "countWest";
 		publicVariable "countEast";
 		
+
+		
 		if (gameStart) then
 		{
+			roundTime = timeRoundOver - time;
+			publicVariable "roundTime";
 			
 			//if flagbearer died, detach flag and let it be available again. lazy evaluation magic here
 			if (!(isNil "flagBearer") and {!(alive flagBearer)}) then
 			{
 				flagBearer = nil;
+				publicVariable "flagBearer";
 				detach flagWhite;
 				flagWhite setPos [(getPos flagWhite) select 0, (getPos flagWhite) select 1,0];
+				
+				//get updated positions for client.
+				posFlagWhite = getPos flagWhite;
+				publicVariable "posFlagWhite";
+				posFlagWest = getPos flagWest;
+				publicVariable "posFlagWest";
+				posFlagEast = getPos flagEast;
+				publicVariable "posFlagEast";
 			};
 			
 			//if the flag hasn't been taken yet, paintballers will pick it up.
@@ -103,17 +124,12 @@ waitUntil{ ({alive _x} count playableUnits) == (count playerList) };
 				if ((isNil "flagBearer") and (alive _x) and {(_x distance flagWhite < 4.5)}) then
 				{
 					flagTakenOnce = true;
+					publicVariable "flagTakenOnce";
 					flagWhite attachTo [_x, [0,0,0.5]];
 					flagBearer = _x;
+					publicVariable "flagBearer";
 					[nil, "fnc_soundFlagTaken"] spawn BIS_fnc_MP;
-					if (side flagBearer == WEST) then
-					{
-						[nil, "fnc_hintWestFlag"] spawn BIS_fnc_MP;
-						
-					} else
-					{
-						[nil, "fnc_hintEastFlag"] spawn BIS_fnc_MP;
-					};
+
 					
 				};
 			} forEach paintBallers;
@@ -129,16 +145,24 @@ waitUntil{ ({alive _x} count playableUnits) == (count playerList) };
 					sleep 2;
 					eastRound = true;
 					eastWins = eastWins + 1;
+					publicVariable "eastRound";
 					publicVariable "eastWins";
 					
 					//cinematic
-					["cin_eastround.sqf","BIS_fnc_execVM"] spawn BIS_fnc_MP;
+					["cinematics\cin_eastround.sqf","BIS_fnc_execVM"] spawn BIS_fnc_MP;
 					
 					//freeze all the bots
 					{ _x enableSimulation false;} forEach botList;
 
 					sleep 10;
-					_null = execVM "resetRound.sqf";
+					if ((westWins == pointLimit) or (eastWins == pointLimit)) then
+					{
+						gameOver = true;
+					} else
+					{
+						_null = execVM "resetRound.sqf";
+					};
+					
 
 				};
 				
@@ -151,14 +175,21 @@ waitUntil{ ({alive _x} count playableUnits) == (count playerList) };
 					westRound = true;
 					westWins = westWins + 1;
 					publicVariable "westWins";
+					publicVariable "westRound";
 					
-					["cin_westround.sqf","BIS_fnc_execVM"] spawn BIS_fnc_MP;
+					["cinematics\cin_westround.sqf","BIS_fnc_execVM"] spawn BIS_fnc_MP;
 
 					//freeze all the bots
 					{ _x enableSimulation false;} forEach botList;
 					
 					sleep 10;
-					_null = execVM "resetRound.sqf";
+					if ((westWins == pointLimit) or (eastWins == pointLimit)) then
+					{
+						gameOver = true;
+					} else
+					{
+						_null = execVM "resetRound.sqf";
+					};
 
 				};
 				
@@ -170,14 +201,21 @@ waitUntil{ ({alive _x} count playableUnits) == (count playerList) };
 					westRound = true;
 					westWins = westWins + 1;
 					publicVariable "westWins";
+					publicVariable "westRound";
 					
-					["cin_westroundflag.sqf","BIS_fnc_execVM"] spawn BIS_fnc_MP;
+					["cinematics\cin_westroundflag.sqf","BIS_fnc_execVM"] spawn BIS_fnc_MP;
 					
 					//freeze all bots if there are any
 					{ _x enableSimulation false;} forEach botList;
 					
 					sleep 10;
-					_null = execVM "resetRound.sqf";			
+					if ((westWins == pointLimit) or (eastWins == pointLimit)) then
+					{
+						gameOver = true;
+					} else
+					{
+						_null = execVM "resetRound.sqf";
+					};
 					
 				};
 				
@@ -189,19 +227,26 @@ waitUntil{ ({alive _x} count playableUnits) == (count playerList) };
 					eastRound = true;
 					eastWins = eastWins + 1;
 					publicVariable "eastWins";
+					publicVariable "eastRound";
 					
-					["cin_eastroundflag.sqf","BIS_fnc_execVM"] spawn BIS_fnc_MP;
+					["cinematics\cin_eastroundflag.sqf","BIS_fnc_execVM"] spawn BIS_fnc_MP;
 
 					//freeze all the bots
 					{ _x enableSimulation false;} forEach botList;
 					
 					sleep 10;
-					_null = execVM "resetRound.sqf";
+					if ((westWins == pointLimit) or (eastWins == pointLimit)) then
+					{
+						gameOver = true;
+					} else
+					{
+						_null = execVM "resetRound.sqf";
+					};
 					
 				};
 
 				//if time ran out, give point to the side the flag is closest to.
-				case (serverTime > timeRoundOver):
+				case (time > timeRoundOver):
 				{
 					gameStart = false;
 					publicVariable "gameStart";
@@ -214,33 +259,52 @@ waitUntil{ ({alive _x} count playableUnits) == (count playerList) };
 							westRound = true;
 							westWins = westWins + 1;
 							publicVariable "westWins";
+							publicVariable "westRound";
 							
-							["cin_westroundflag.sqf","BIS_fnc_execVM"] spawn BIS_fnc_MP;
+							["cinematics\cin_westroundflag.sqf","BIS_fnc_execVM"] spawn BIS_fnc_MP;
 							
 							//freeze all bots if there are any
 							{ _x enableSimulation false;} forEach botList;
 							
 							sleep 10;
-							_null = execVM "resetRound.sqf";			
+							if ((westWins == pointLimit) or (eastWins == pointLimit)) then
+							{
+								gameOver = true;
+							} else
+							{
+								_null = execVM "resetRound.sqf";
+							};	
 													
 						} else {
 							//east wins
 							eastRound = true;
 							eastWins = eastWins + 1;
 							publicVariable "eastWins";
+							publicVariable "eastRound";
 							
-							["cin_eastroundflag.sqf","BIS_fnc_execVM"] spawn BIS_fnc_MP;
+							["cinematics\cin_eastroundflag.sqf","BIS_fnc_execVM"] spawn BIS_fnc_MP;
 
 							//freeze all the bots
 							{ _x enableSimulation false;} forEach botList;
 							
 							sleep 10;
-							_null = execVM "resetRound.sqf";
+							if ((westWins == pointLimit) or (eastWins == pointLimit)) then
+							{
+								gameOver = true;
+							} else
+							{
+								_null = execVM "resetRound.sqf";
+							};
 							
 						};
 						
 					} else {
 						//round draw
+						roundDraw = true;
+						publicVariable "roundDraw";
+						["cinematics\cin_rounddraw.sqf","BIS_fnc_execVM"] spawn BIS_fnc_MP;
+						sleep 10;
+						_null = execVM "resetRound.sqf";
 						
 					}; 
 
@@ -254,6 +318,12 @@ waitUntil{ ({alive _x} count playableUnits) == (count playerList) };
 
 		sleep 0.06;
 	};
+	//west wins
+	if (westWins == pointLimit) then
+	{
+		["cinematics\cin_westwins.sqf", "BIS_fnc_execVM"] spawn BIS_fnc_MP;
+	} else // east wins
+	{
+		["cinematics\cin_eastwins.sqf", "BIS_fnc_execVM"] spawn BIS_fnc_MP;
+	};
 };
-
-

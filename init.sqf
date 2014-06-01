@@ -38,17 +38,7 @@ fnc_soundFlagTaken = {
 	playSound "FlagTaken";
 };
 
-fnc_hintEastFlag = {
-	hint "East side has the flag!";
-	sleep 5;
-	hint "";
-};
 
-fnc_hintWestFlag = {
-	hint "West side has the flag!";
-	sleep 5;
-	hint "";
-};
 
 if (isServer) then
 {

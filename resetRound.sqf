@@ -2,6 +2,11 @@ roundOver = false;
 westRound = false;
 eastRound = false;
 flagTakenOnce = false;
+roundDraw = false;
+publicVariable "flagTakenOnce";
+publicVariable "eastRound";
+publicVariable "westRound";
+publicVariable "roundDraw";
 publicVariable "gameStart";
 
 detach flagWhite;
@@ -23,7 +28,7 @@ flagBearer = nil;
 [nil, "fnc_resetMP"] call BIS_fnc_MP;
 
 //wait until everyone is alive before..
-waitUntil{ ({alive _x} count playableUnits) == (count playerList) };
+//waitUntil{ ({alive _x} count playableUnits) == (count playerList) };
 
 //we recreate the paintballer lists!
 {
@@ -42,14 +47,16 @@ waitUntil{ ({alive _x} count playableUnits) == (count playerList) };
 } forEach playerList;
 
 
+roundTime = 90;
+publicVariable "roundTime";
 
-["cin_resetround.sqf","BIS_fnc_execVM"] spawn BIS_fnc_MP;
+["cinematics\cin_resetround.sqf","BIS_fnc_execVM"] spawn BIS_fnc_MP;
 sleep 5;
-["cin_three.sqf","BIS_fnc_execVM"] spawn BIS_fnc_MP;
+["cinematics\cin_three.sqf","BIS_fnc_execVM"] spawn BIS_fnc_MP;
 sleep 1;
-["cin_two.sqf","BIS_fnc_execVM"] spawn BIS_fnc_MP;
+["cinematics\cin_two.sqf","BIS_fnc_execVM"] spawn BIS_fnc_MP;
 sleep 1;
-["cin_one.sqf","BIS_fnc_execVM"] spawn BIS_fnc_MP;
+["cinematics\cin_one.sqf","BIS_fnc_execVM"] spawn BIS_fnc_MP;
 sleep 1;
 //gogogo!
 [nil, "fnc_startMP"] call BIS_fnc_MP;
@@ -57,7 +64,7 @@ sleep 1;
 gameStart = true;
 publicVariable "gameStart";
 
-timeRoundOver = serverTime + 90;
+timeRoundOver = time + 90;
 
 //count up players;
 _countWest = count paintBallersWest;
@@ -98,13 +105,8 @@ if (botsEnabled) then
 	};
 };
 
-//flag waypoint
-_wp = groupWest addWaypoint [getPos flagWhite , 0];
-_wpE = groupEast addWaypoint [getPos flagWhite, 0];
-
-//go back to base waypoint
-_wp1 = groupWest addWaypoint [getPos flagWest , 0];
-_wpE1 = groupEast addWaypoint [getPos flagEast, 0];
+_wp = groupWest addWaypoint [getPos flagEast , 0];
+_wpE = groupEast addWaypoint [getPos flagWest, 0];
 
 groupWest setBehaviour "COMBAT";
 groupEast setBehaviour "COMBAT";

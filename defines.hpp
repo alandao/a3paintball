@@ -116,7 +116,7 @@ class RscText
     colorText[] = {1,1,1,1};
     text = "";
     shadow = 2;
-    font = "puristaLight";
+    font = "PuristaSemiBold";
     SizeEx = 0.02300;
     fixedWidth = 0;
     x = 0;
@@ -232,29 +232,21 @@ class RscTitles {
 				h = 0.028 * safezoneH;
 				sizeEx = 1 * GUI_GRID_H;
 			};
+			
 			class PAINTBALL_HINT: RscText
 			{
 				idc = 1001;
-				text = "The East have the flag."; //--- ToDo: Localize;
+				text = ""; //--- ToDo: Localize;
 				x = 0.355625 * safezoneW + safezoneX;
-				y = 0.094 * safezoneH + safezoneY;
-				w = 0.282188 * safezoneW;
+				y = 0.12 * safezoneH + safezoneY;
+				w = 0.31 * safezoneW;
 				h = 0.056 * safezoneH;
 				sizeEx = 1.5 * GUI_GRID_H;
 			};
-			class PAINTBALL_SCORE: RscText
-			{
-				idc = 1002;
-				text = "3  16"; //--- ToDo: Localize;
-				x = 0.460625 * safezoneW + safezoneX;
-				y = 0.01 * safezoneH + safezoneY;
-				w = 0.07875 * safezoneW;
-				h = 0.042 * safezoneH;
-				sizeEx = 1.5 * GUI_GRID_H;
-			};
+
 			class PAINTBALL_EASTALIVE: RscText
 			{
-				idc = 1003;
+				idc = 1002;
 				text = "East alive: "; //--- ToDo: Localize;
 				x = 0.565625 * safezoneW + safezoneX;
 				y = 0.024 * safezoneH + safezoneY;
@@ -262,7 +254,50 @@ class RscTitles {
 				h = 0.028 * safezoneH;
 				sizeEx = 1 * GUI_GRID_H;
 			};
-		
+			
+			class PAINTBALL_TIME: RscText
+			{
+				idc = 1003;
+				text = "1:30"; //--- ToDo: Localize;
+				x = 0.478 * safezoneW + safezoneX;
+				y = 0.01 * safezoneH + safezoneY;
+				w = 0.0459375 * safezoneW;
+				h = 0.042 * safezoneH;
+				sizeEx = 1 * GUI_GRID_H;
+			};
+			
+			class PAINTBALL_SCOREWEST: RscText
+			{
+				idc = 1004;
+				text = "5"; //--- ToDo: Localize;
+				x = 0.460625 * safezoneW + safezoneX;
+				y = 0.052 * safezoneH + safezoneY;
+				w = 0.039375 * safezoneW;
+				h = 0.042 * safezoneH;
+				sizeEx = 2 * GUI_GRID_H;
+			};
+			class PAINTBALL_SCOREEAST: RscText
+			{
+				idc = 1005;
+				text = "2"; //--- ToDo: Localize;
+				x = 0.5 * safezoneW + safezoneX;
+				y = 0.052 * safezoneH + safezoneY;
+				w = 0.039375 * safezoneW;
+				h = 0.042 * safezoneH;
+				sizeEx = 2 * GUI_GRID_H;
+			};
+			
+			class PAINTBALL_STATUS: RscText
+			{
+				idc = 1006;
+				text = ""; //--- ToDo: Localize;
+				x = 0.2375 * safezoneW + safezoneX;
+				y = 0.584 * safezoneH + safezoneY;
+				w = 0.525 * safezoneW;
+				h = 0.07 * safezoneH;
+				sizeEx = 2 * GUI_GRID_H;
+			};
+			
 		};
 		
 
