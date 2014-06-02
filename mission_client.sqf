@@ -67,9 +67,9 @@ if (isNull player) then
 {
 	waitUntil {alive player;};
 	player enableSimulation false;
+	cutText ["A round is still in progress, please wait...","BLACK"];
 	waitUntil { sleep 0.1; !gameStart };
 };
-
 
 //removes bodies on respawn
 _null = player addMPEventHandler ["MPRespawn", {deleteVehicle (_this select 1)}];
@@ -102,7 +102,7 @@ _null = player addMPEventHandler ["MPRespawn", {deleteVehicle (_this select 1)}]
 		
 		//hud hint
 	
-		if !(isNil "flagBearer") then
+		if (!(isNil "flagBearer") and {(alive flagBearer)}) then
 		{
 			if (side flagBearer == west) then
 			{

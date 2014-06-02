@@ -21,11 +21,13 @@ class Mission
 		"A3_Soft_F_EPC_Truck_03",
 		"A3_Structures_F_Ind_Cargo",
 		"A3_Structures_F_Items_Vessels",
-		"a3_characters_f_beta"
+		"a3_characters_f_beta",
+		"a3_characters_f"
 	};
 	addOnsAuto[]=
 	{
 		"A3_Characters_F_BLUFOR",
+		"a3_characters_f",
 		"A3_Characters_F_OPFOR",
 		"A3_Structures_F_Mil_Fortification",
 		"A3_Structures_F_Ind_Cargo",
@@ -946,7 +948,7 @@ class Mission
 		};
 		class Item70
 		{
-			position[]={23438.459,3.1900001,18734.242};
+			position[]={23440.701,3.1900001,18729.307};
 			azimut=180;
 			id=80;
 			side="EMPTY";
@@ -1035,11 +1037,13 @@ class Intro
 	addOns[]=
 	{
 		"a3_map_altis",
-		"A3_Characters_F_BLUFOR"
+		"A3_Characters_F_BLUFOR",
+		"a3_characters_f"
 	};
 	addOnsAuto[]=
 	{
 		"A3_Characters_F_BLUFOR",
+		"a3_characters_f",
 		"a3_map_altis"
 	};
 	randomSeed=1412404;

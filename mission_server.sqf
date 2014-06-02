@@ -2,6 +2,7 @@ playerList = [];
 botsEnabled = true;
 pointLimit = 5;
 botList = [];
+objectsToMirror = [];
 groupWest = createGroup west;
 groupEast = createGroup east;
 
@@ -12,14 +13,14 @@ gameOver = false;
 _playerConnects = ["id1", "onPlayerConnected", {
 
 	playerList set [count playerList, _uid];
-
+	playerList = playerList - [""];
 }] call BIS_fnc_addStackedEventHandler;
 
 //when player disconnects.
 _playerDisconnects = ["id2", "onPlayerDisconnected", {
 
 	playerList = playerList - [_uid];
-
+	playerList = playerList - [""];
 }] call BIS_fnc_addStackedEventHandler;
 
 if (!isDedicated) then
@@ -62,28 +63,17 @@ flagEast =  createVehicle ["Flag_CSAT_F",[respawnEast select 0, (respawnEast sel
 
 _null = execVM "resetRound.sqf";
 
-//get updated positions for client.
-posFlagWhite = getPos flagWhite;
-publicVariable "posFlagWhite";
-posFlagWest = getPos flagWest;
-publicVariable "posFlagWest";
-posFlagEast = getPos flagEast;
-publicVariable "posFlagEast";
 
-//200 is how big our map is going to be
-objectsToMirror = [];
-
-waitUntil{ ({alive _x} count playableUnits) == (count playerList) };
-
-
-//mirror the objects on the other side of the flag
-{
-	[_x, flagWhite] call paintball_fnc_mirrorVehicle;
-} forEach objectsToMirror;
 
 //MISSION LOGIC
 [] spawn
 {
+
+	//mirror the objects on the other side of the flag
+	{
+		[_x, flagWhite] call paintball_fnc_mirrorVehicle;
+	} forEach objectsToMirror;
+	
 	while {!gameOver} do
 	{
 	

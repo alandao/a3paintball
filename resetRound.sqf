@@ -27,8 +27,26 @@ flagBearer = nil;
 //respawn and freeze
 [nil, "fnc_resetMP"] call BIS_fnc_MP;
 
-//wait until everyone is alive before..
-//waitUntil{ ({alive _x} count playableUnits) == (count playerList) };
+
+
+
+
+roundTime = 90;
+publicVariable "roundTime";
+
+["cinematics\cin_resetround.sqf","BIS_fnc_execVM"] spawn BIS_fnc_MP;
+sleep 5;
+["cinematics\cin_three.sqf","BIS_fnc_execVM"] spawn BIS_fnc_MP;
+sleep 1;
+["cinematics\cin_two.sqf","BIS_fnc_execVM"] spawn BIS_fnc_MP;
+sleep 1;
+["cinematics\cin_one.sqf","BIS_fnc_execVM"] spawn BIS_fnc_MP;
+sleep 1;
+//gogogo!
+[nil, "fnc_startMP"] call BIS_fnc_MP;
+
+
+
 
 //we recreate the paintballer lists!
 {
@@ -46,30 +64,9 @@ flagBearer = nil;
 	
 } forEach playerList;
 
-
-roundTime = 90;
-publicVariable "roundTime";
-
-["cinematics\cin_resetround.sqf","BIS_fnc_execVM"] spawn BIS_fnc_MP;
-sleep 5;
-["cinematics\cin_three.sqf","BIS_fnc_execVM"] spawn BIS_fnc_MP;
-sleep 1;
-["cinematics\cin_two.sqf","BIS_fnc_execVM"] spawn BIS_fnc_MP;
-sleep 1;
-["cinematics\cin_one.sqf","BIS_fnc_execVM"] spawn BIS_fnc_MP;
-sleep 1;
-//gogogo!
-[nil, "fnc_startMP"] call BIS_fnc_MP;
-
-gameStart = true;
-publicVariable "gameStart";
-
-timeRoundOver = time + 90;
-
 //count up players;
 _countWest = count paintBallersWest;
 _countEast = count paintBallersEast;
-
 
 //spawn bots if they are enabled.
 if (botsEnabled) then
@@ -110,3 +107,8 @@ _wpE = groupEast addWaypoint [getPos flagWest, 0];
 
 groupWest setBehaviour "COMBAT";
 groupEast setBehaviour "COMBAT";
+
+gameStart = true;
+publicVariable "gameStart";
+
+timeRoundOver = time + 90;
