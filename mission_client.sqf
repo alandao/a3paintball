@@ -1,66 +1,14 @@
+//removes bodies on respawn
+_null = player addMPEventHandler ["MPRespawn", {deleteVehicle (_this select 1)}];
 
-//will get updated by publicvariable
-//BOILERPLATE CODE INBOUND
-if (isNil "countWest") then
+if (isNil "gameState") then
 {
-	countWest = 0;
-};
-if (isNil "countEast") then
-{
-	countEast = 0;
-};
-if (isNil "eastWins") then
-{
-	eastWins = 0;
-};
-if (isNil "westWins") then
-{
-	westWins = 0;
-};
-if (isNil "flagBearer") then
-{
-	flagBearer = nil;
-};
-if (isNil "flagTakenOnce") then
-{
-	flagTakenOnce = false;
+	gameState = [0,0,true,0,false,false,false,false,0,0, false,[0,0,0],[0,0,0],[0,0,0]];
 };
 
-if (isNil "posFlagWhite") then
-{
-	posFlagWhite = [0,0,0];
-};
+//gameState = [westWins,eastWins,gameStart,timeLeft,roundDraw,westRound,eastRound,flagTakenOnce,countWest,countEast,flagBearer, posFlagWhite,posFlagWest,posFlageast];
 
-if (isNil "posFlagWest") then
-{
-	posFlagWest = [0,0,0];
-};
 
-if (isNil "posFlagEast") then
-{
-	posFlagEast = [0,0,0];
-};
-if (isNil "westRound") then
-{
-	westRound = false;
-};
-if (isNil "eastRound") then
-{
-	eastRound = false;
-};
-if (isNil "roundTime") then
-{
-	roundTime = 0;
-};
-if (isNil "roundDraw") then
-{
-	roundDraw = false;
-};
-if (isNil "gameStart") then
-{
-	gameStart = true;
-};
-//end of boilerplate code
 
 //for JIP
 if (isNull player) then
@@ -68,90 +16,100 @@ if (isNull player) then
 	waitUntil {alive player;};
 	player enableSimulation false;
 	cutText ["A round is still in progress, please wait...","BLACK"];
-	waitUntil { sleep 0.1; !gameStart };
+	waitUntil { sleep 0.1; !(_gameStart)};
+	call fnc_resetMP;
 };
-
-//removes bodies on respawn
-_null = player addMPEventHandler ["MPRespawn", {deleteVehicle (_this select 1)}];
-
-
 
 //hud
-[] spawn {
-	while {true} do
-	{
-		cutRsc["PAINTBALL_HUD","PLAIN"];
-		
-		//time
-		_roundTimeArray = [(roundTime/60), "ARRAY"] call BIS_fnc_timetostring;
-		_roundTimeFormatted = format ["%1:%2", _roundTimeArray select 0, _roundTimeArray select 1];
-		((uiNamespace getVariable "paint_hud") displayCtrl 1003) ctrlSetText _roundTimeFormatted;
-		
-		//west alive
-		_westAlive = format["West alive: %1", countWest];
-		//east alive
-		_eastAlive = format["East alive: %1", countEast];
-		((uiNamespace getVariable "paint_hud") displayCtrl 1000) ctrlSetText _westAlive;
-		((uiNamespace getVariable "paint_hud") displayCtrl 1002) ctrlSetText _eastAlive;
-		
-		_scoreWest = format["%1", westWins];
-		_scoreEast = format["%1", eastWins];
-		//set score
-		((uiNamespace getVariable "paint_hud") displayCtrl 1004) ctrlSetText _scoreWest;
-		((uiNamespace getVariable "paint_hud") displayCtrl 1005) ctrlSetText _scoreEast;
-		
-		//hud hint
+while {true} do
+{
+	_westWins = gameState select 0;
+	_eastWins = gameState select 1;
+	_gameStart = gameState select 2;
+	_timeLeft = gameState select 3;
+	_roundDraw = gameState select 4;
+	_westRound = gameState select 5;
+	_eastRound = gameState select 6;
+	_flagTakenOnce = gameState select 7;
+	_countWest = gameState select 8;
+	_countEast = gameState select 9;
+	_flagBearer = gameState select 10;
+	_posFlagWhite = gameState select 11;
+	_posFlagWest = gameState select 12;
+	_posFlagEast = gameState select 13;
 	
-		if (!(isNil "flagBearer") and {(alive flagBearer)}) then
+	cutRsc["PAINTBALL_HUD","PLAIN"];
+
+	//clock up top
+	_roundTimeArray = [(_timeLeft/60), "ARRAY"] call BIS_fnc_timetostring;
+	_roundTimeFormatted = format ["%1:%2", _roundTimeArray select 0, _roundTimeArray select 1];
+	((uiNamespace getVariable "paint_hud") displayCtrl 1003) ctrlSetText _roundTimeFormatted;
+	
+	//west alive on left
+	_westAlive = format["West alive: %1", _countWest];
+	//east alive on right
+	_eastAlive = format["East alive: %1", _countEast];
+	((uiNamespace getVariable "paint_hud") displayCtrl 1000) ctrlSetText _westAlive;
+	((uiNamespace getVariable "paint_hud") displayCtrl 1002) ctrlSetText _eastAlive;
+	
+	//score below clock
+	_scoreWest = format["%1", _westWins];
+	_scoreEast = format["%1", _eastWins];
+	((uiNamespace getVariable "paint_hud") displayCtrl 1004) ctrlSetText _scoreWest;
+	((uiNamespace getVariable "paint_hud") displayCtrl 1005) ctrlSetText _scoreEast;
+	
+	//for status display up top
+	//lazy evaluation magic
+	if ((typeName _flagBearer != "BOOL") and {(alive _flagBearer)}) then
+	{
+		if (side _flagBearer == west) then
 		{
-			if (side flagBearer == west) then
-			{
-				((uiNamespace getVariable "paint_hud") displayCtrl 1001) ctrlSetText "The West has the flag.";
-			} else
-			{
-				((uiNamespace getVariable "paint_hud") displayCtrl 1001) ctrlSetText "The East has the flag.";
-			};
-		
+			((uiNamespace getVariable "paint_hud") displayCtrl 1001) ctrlSetText "The West has the flag.";
 		} else
 		{
-			if (flagTakenOnce) then
+			((uiNamespace getVariable "paint_hud") displayCtrl 1001) ctrlSetText "The East has the flag.";
+		};
+	
+	} else
+	{
+		if (_flagTakenOnce) then
+		{
+			if (_posFlagWhite distance _posFlagWest < _posFlagWhite distance _posFlagEast) then
 			{
-				if (posFlagWhite distance posFlagWest < posFlagWhite distance posFlagEast) then
-				{
-					((uiNamespace getVariable "paint_hud") displayCtrl 1001) ctrlSetText "Flag is closer to the West side.";
-				} else
-				{
-					((uiNamespace getVariable "paint_hud") displayCtrl 1001) ctrlSetText "Flag is closer to the East side.";
-				};
+				((uiNamespace getVariable "paint_hud") displayCtrl 1001) ctrlSetText "Flag is closer to the West side.";
 			} else
 			{
-				((uiNamespace getVariable "paint_hud") displayCtrl 1001) ctrlSetText "";
+				((uiNamespace getVariable "paint_hud") displayCtrl 1001) ctrlSetText "Flag is closer to the East side.";
 			};
-			
+		} else
+		{
+			((uiNamespace getVariable "paint_hud") displayCtrl 1001) ctrlSetText "";
 		};
 		
-		switch (true) do {
-			case (westRound):
-			{
-				((uiNamespace getVariable "paint_hud") displayCtrl 1006) ctrlSetText "One point for the West!";
-			};
-			case (eastRound):
-			{
-				((uiNamespace getVariable "paint_hud") displayCtrl 1006) ctrlSetText "One point for the East!";
-			};
-			case (roundDraw):
-			{
-				((uiNamespace getVariable "paint_hud") displayCtrl 1006) ctrlSetText "No one gets a point! Round draw!";
-			};
-			default
-			{
-				((uiNamespace getVariable "paint_hud") displayCtrl 1006) ctrlSetText "";
-			}
-		};
-
-		
-		sleep 0.5;
 	};
 	
+	switch (true) do {
+		case (_westRound):
+		{
+			((uiNamespace getVariable "paint_hud") displayCtrl 1006) ctrlSetText "One point for the West!";
+		};
+		case (_eastRound):
+		{
+			((uiNamespace getVariable "paint_hud") displayCtrl 1006) ctrlSetText "One point for the East!";
+		};
+		case (_roundDraw):
+		{
+			((uiNamespace getVariable "paint_hud") displayCtrl 1006) ctrlSetText "No one gets a point! Round draw!";
+		};
+		default
+		{
+			((uiNamespace getVariable "paint_hud") displayCtrl 1006) ctrlSetText "";
+		}
+	};
 
+	
+	sleep 0.5;
 };
+
+
+

@@ -14,7 +14,6 @@ _camera camCommit 0;
 
 
 playMusic "pointEast";
-cutText [format ["%1 - %2", westWins, eastWins], "PLAIN", 2];
 sleep 8;
 
 cutText ["", "PLAIN", 2];

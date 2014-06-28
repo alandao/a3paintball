@@ -1,13 +1,7 @@
-roundOver = false;
 westRound = false;
 eastRound = false;
 flagTakenOnce = false;
 roundDraw = false;
-publicVariable "flagTakenOnce";
-publicVariable "eastRound";
-publicVariable "westRound";
-publicVariable "roundDraw";
-publicVariable "gameStart";
 
 detach flagWhite;
 //set between flagWest and flagEast
@@ -22,17 +16,11 @@ paintBallers = [];
 paintBallersWest = [];
 paintBallersEast = [];
 botList = [];
-flagBearer = nil;
+flagBearer = false;
 
 //respawn and freeze
 [nil, "fnc_resetMP"] call BIS_fnc_MP;
 
-
-
-
-
-roundTime = 90;
-publicVariable "roundTime";
 
 ["cinematics\cin_resetround.sqf","BIS_fnc_execVM"] spawn BIS_fnc_MP;
 sleep 5;
@@ -44,7 +32,6 @@ sleep 1;
 sleep 1;
 //gogogo!
 [nil, "fnc_startMP"] call BIS_fnc_MP;
-
 
 
 
@@ -109,6 +96,4 @@ groupWest setBehaviour "COMBAT";
 groupEast setBehaviour "COMBAT";
 
 gameStart = true;
-publicVariable "gameStart";
-
-timeRoundOver = time + 90;
+timeRoundOver = time + roundTime;

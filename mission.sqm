@@ -30,9 +30,8 @@ class Mission
 		"a3_characters_f",
 		"A3_Characters_F_OPFOR",
 		"A3_Structures_F_Mil_Fortification",
-		"A3_Structures_F_Ind_Cargo",
-		"A3_Structures_F_Mil_BagFence",
 		"A3_Structures_F_Walls",
+		"A3_Structures_F_Mil_BagFence",
 		"A3_Structures_F_Civ_Garbage",
 		"a3_map_altis"
 	};
@@ -70,7 +69,7 @@ class Mission
 				items=1;
 				class Item0
 				{
-					position[]={22773.15,13.349304,18988.063};
+					position[]={22773.115,13.34935,18988.063};
 					id=0;
 					side="WEST";
 					vehicle="B_Soldier_F";
@@ -88,7 +87,7 @@ class Mission
 				items=1;
 				class Item0
 				{
-					position[]={22775.779,13.345798,18988.063};
+					position[]={22775.744,13.345844,18988.063};
 					id=1;
 					side="WEST";
 					vehicle="B_Soldier_F";
@@ -106,7 +105,7 @@ class Mission
 				items=1;
 				class Item0
 				{
-					position[]={22777.959,13.327034,18987.912};
+					position[]={22777.924,13.328009,18987.912};
 					id=2;
 					side="WEST";
 					vehicle="B_Soldier_F";
@@ -124,7 +123,7 @@ class Mission
 				items=1;
 				class Item0
 				{
-					position[]={22780.063,13.251019,18987.764};
+					position[]={22780.027,13.25343,18987.764};
 					id=3;
 					side="WEST";
 					vehicle="B_Soldier_F";
@@ -142,7 +141,7 @@ class Mission
 				items=1;
 				class Item0
 				{
-					position[]={22782.691,13.071316,18987.613};
+					position[]={22782.656,13.073729,18987.613};
 					id=4;
 					side="WEST";
 					vehicle="B_Soldier_F";
@@ -689,7 +688,7 @@ class Mission
 			position[]={23461.555,3.1900001,18736.268};
 			id=56;
 			side="EMPTY";
-			vehicle="Land_Cargo20_blue_F";
+			vehicle="Land_CncWall4_F";
 			lock="LOCKED";
 			skill=0.60000002;
 			init="_nil = [this] spawn {waitUntil {!isNil ""objectsToMirror""}; objectsToMirror = objectsToMirror + [_this select 0]};  ";
@@ -842,7 +841,7 @@ class Mission
 			azimut=180;
 			id=70;
 			side="EMPTY";
-			vehicle="Land_HBarrier_1_F";
+			vehicle="Land_BagFence_Round_F";
 			lock="LOCKED";
 			skill=0.60000002;
 			init="_nil = [this] spawn {waitUntil {!isNil ""objectsToMirror""}; objectsToMirror = objectsToMirror + [_this select 0]};  ";
@@ -853,7 +852,7 @@ class Mission
 			azimut=180;
 			id=71;
 			side="EMPTY";
-			vehicle="Land_HBarrier_1_F";
+			vehicle="Land_CncWall1_F";
 			lock="LOCKED";
 			skill=0.60000002;
 			init="_nil = [this] spawn {waitUntil {!isNil ""objectsToMirror""}; objectsToMirror = objectsToMirror + [_this select 0]};  ";
@@ -864,7 +863,7 @@ class Mission
 			azimut=180;
 			id=72;
 			side="EMPTY";
-			vehicle="Land_HBarrier_1_F";
+			vehicle="Land_BagFence_Round_F";
 			lock="LOCKED";
 			skill=0.60000002;
 			init="_nil = [this] spawn {waitUntil {!isNil ""objectsToMirror""}; objectsToMirror = objectsToMirror + [_this select 0]};  ";
@@ -875,7 +874,7 @@ class Mission
 			azimut=180;
 			id=73;
 			side="EMPTY";
-			vehicle="Land_HBarrier_1_F";
+			vehicle="Land_CncWall1_F";
 			lock="LOCKED";
 			skill=0.60000002;
 			init="_nil = [this] spawn {waitUntil {!isNil ""objectsToMirror""}; objectsToMirror = objectsToMirror + [_this select 0]};  ";
@@ -886,7 +885,7 @@ class Mission
 			azimut=180;
 			id=74;
 			side="EMPTY";
-			vehicle="Land_HBarrier_1_F";
+			vehicle="Land_CncWall1_F";
 			lock="LOCKED";
 			skill=0.60000002;
 			init="_nil = [this] spawn {waitUntil {!isNil ""objectsToMirror""}; objectsToMirror = objectsToMirror + [_this select 0]};  ";
@@ -897,7 +896,7 @@ class Mission
 			azimut=180;
 			id=75;
 			side="EMPTY";
-			vehicle="Land_HBarrier_1_F";
+			vehicle="Land_CncWall1_F";
 			lock="LOCKED";
 			skill=0.60000002;
 			init="_nil = [this] spawn {waitUntil {!isNil ""objectsToMirror""}; objectsToMirror = objectsToMirror + [_this select 0]};  ";
@@ -963,7 +962,7 @@ class Mission
 			azimut=180;
 			id=81;
 			side="EMPTY";
-			vehicle="Land_HBarrier_1_F";
+			vehicle="Land_BagFence_Round_F";
 			lock="LOCKED";
 			skill=0.60000002;
 			init="_nil = [this] spawn {waitUntil {!isNil ""objectsToMirror""}; objectsToMirror = objectsToMirror + [_this select 0]};  ";
@@ -974,7 +973,7 @@ class Mission
 			azimut=180;
 			id=82;
 			side="EMPTY";
-			vehicle="Land_HBarrier_1_F";
+			vehicle="Land_BagFence_Round_F";
 			lock="LOCKED";
 			skill=0.60000002;
 			init="_nil = [this] spawn {waitUntil {!isNil ""objectsToMirror""}; objectsToMirror = objectsToMirror + [_this select 0]};  ";
