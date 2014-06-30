@@ -12,7 +12,11 @@ fnc_resetMP = {
 	setPlayerRespawnTime 99999999;
 	player setDamage 0;
 	removeAllWeapons player;
-	player addMagazines["30Rnd_65x39_caseless_mag_Tracer",3];
+	player unassignItem "NVGoggles";
+	player removeItem "NVGoggles";
+	player unassignItem "NVGoggles_OPFOR";
+	player removeItem "NVGoggles_OPFOR";
+	player addMagazines["30Rnd_65x39_caseless_mag_Tracer",4];
 	player addWeapon "arifle_MXC_ACO_F";
 	if (side player == WEST) then
 	{
@@ -36,6 +40,28 @@ fnc_startMP = {
 
 fnc_soundFlagTaken = {
 	playSound "FlagTaken";
+};
+
+fnc_gameOverWestWon = {
+	if (side player == WEST) then
+	{
+		["The West won!",true,2] call BIS_fnc_endMission;
+	};
+	if (side player == EAST) then
+	{
+		["The East won!",false,2] call BIS_fnc_endMission;
+	};
+};
+
+fnc_gameOverEastWon = {
+	if (side player == WEST) then
+	{
+		["The East won!",false,2] call BIS_fnc_endMission;
+	};
+	if (side player == EAST) then
+	{
+		["The East won!",true,2] call BIS_fnc_endMission;
+	};
 };
 
 

@@ -56,16 +56,19 @@ _countWest = count paintBallersWest;
 _countEast = count paintBallersEast;
 
 //spawn bots if they are enabled.
-if (botsEnabled) then
+if (botsEnabled == 1) then
 {
 	//make west bots
 	for [{_i = 0}, {_i< 5 - _countWest}, {_i = _i + 1}] do
 	{
 		_x = groupWest createUnit ["B_Soldier_F", getMarkerPos "respawn_west", [], 0, "CAN_COLLIDE"];
 		removeAllWeapons _x;
-		_x addMagazines["30Rnd_65x39_caseless_mag_Tracer",3];
+		_x unassignItem "NVGoggles";
+		_x removeItem "NVGoggles";
+		_x addMagazines["30Rnd_65x39_caseless_mag_Tracer",4];
 		_x addWeapon "arifle_MXC_ACO_F";
-		_x setSkill 0.9;
+		_x setSkill 0.6;
+		
 		botList = botList + [_x];
 		
 		//bots are paintballers too!
@@ -78,8 +81,11 @@ if (botsEnabled) then
 	{
 		_x = groupEast createUnit ["O_Soldier_F", getMarkerPos "respawn_east", [], 0, "CAN_COLLIDE"];
 		removeAllWeapons _x;
-		_x addMagazines["30Rnd_65x39_caseless_mag_Tracer",3];
+		_x unassignItem "NVGoggles_OPFOR";
+		_x removeItem "NVGoggles_OPFOR";
+		_x addMagazines["30Rnd_65x39_caseless_mag_Tracer",4];
 		_x addWeapon "arifle_MXC_ACO_F";
+		_x setSkill 0.6;
 		
 		botList = botList + [_x];
 		

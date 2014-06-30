@@ -3,7 +3,7 @@ _null = player addMPEventHandler ["MPRespawn", {deleteVehicle (_this select 1)}]
 
 if (isNil "gameState") then
 {
-	gameState = [0,0,true,0,false,false,false,false,0,0, false,[0,0,0],[0,0,0],[0,0,0]];
+	gameState = [0,0,true,0,false,false,false,false,0,0, false,[0,0,0],[0,0,0],[0,0,0],false,false];
 };
 
 //gameState = [westWins,eastWins,gameStart,timeLeft,roundDraw,westRound,eastRound,flagTakenOnce,countWest,countEast,flagBearer, posFlagWhite,posFlagWest,posFlageast];
@@ -37,6 +37,8 @@ while {true} do
 	_posFlagWhite = gameState select 11;
 	_posFlagWest = gameState select 12;
 	_posFlagEast = gameState select 13;
+	_westClinch = gameState select 14;
+	_eastClinch = gameState select 15;
 	
 	cutRsc["PAINTBALL_HUD","PLAIN"];
 
@@ -89,6 +91,14 @@ while {true} do
 	};
 	
 	switch (true) do {
+		case (_westClinch):
+		{
+			((uiNamespace getVariable "paint_hud") displayCtrl 1006) ctrlSetText "Game over. The West won!";
+		};
+		case (_eastClinch):
+		{
+			((uiNamespace getVariable "paint_hud") displayCtrl 1006) ctrlSetText "Game over. The East won!";
+		};
 		case (_westRound):
 		{
 			((uiNamespace getVariable "paint_hud") displayCtrl 1006) ctrlSetText "One point for the West!";

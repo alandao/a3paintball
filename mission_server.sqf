@@ -1,6 +1,6 @@
 //parameters
-botsEnabled = true;
-pointLimit = 5;
+botsEnabled = paramsArray select 0;
+pointLimit = paramsArray select 3;
 roundTime = 90;
 
 playerList = [];
@@ -22,6 +22,8 @@ eastRound = false;
 countWest = 0;
 countEast = 0;
 flagBearer = false;
+westClinch = false;
+eastClinch = false;
 
 
 
@@ -234,7 +236,7 @@ _null = execVM "resetRound.sqf";
 					//if flag wasn't taken, the round is a draw
 					if (flagTakenOnce) then
 					{
-						switch (true) do:
+						switch (true) do
 						{
 							case ((typeName flagBearer != "BOOL") and {(side flagBearer == WEST)}):
 							{
@@ -341,10 +343,16 @@ _null = execVM "resetRound.sqf";
 	//west wins
 	if (westWins == pointLimit) then
 	{
+		westClinch = true;
 		["cinematics\cin_westwins.sqf", "BIS_fnc_execVM"] spawn BIS_fnc_MP;
+		sleep 10;
+		[nil, "fnc_gameOverWestWon"] call BIS_fnc_MP;
 	} else // east wins
 	{
+		eastClinch = true;
 		["cinematics\cin_eastwins.sqf", "BIS_fnc_execVM"] spawn BIS_fnc_MP;
+		sleep 10;
+		[nil, "fnc_gameOverEastWon"] call BIS_fnc_MP;
 	};
 };
 
@@ -353,7 +361,7 @@ _null = execVM "resetRound.sqf";
 {
 
 	while {true } do {
-		gameState = [westWins,eastWins,gameStart,timeLeft,roundDraw,westRound,eastRound,flagTakenOnce,countWest,countEast,flagBearer,posFlagWhite,posFlagWest,posFlagEast];
+		gameState = [westWins,eastWins,gameStart,timeLeft,roundDraw,westRound,eastRound,flagTakenOnce,countWest,countEast,flagBearer,posFlagWhite,posFlagWest,posFlagEast,westClinch,eastClinch];
 		publicVariable "gameState";
 		sleep 0.1;
 	};	
