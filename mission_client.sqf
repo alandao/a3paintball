@@ -8,7 +8,7 @@ if (isNil "gameState") then
 
 //gameState = [westWins,eastWins,gameStart,timeLeft,roundDraw,westRound,eastRound,flagTakenOnce,countWest,countEast,flagBearer, posFlagWhite,posFlagWest,posFlageast];
 
-
+call fnc_resetMP;
 
 //for JIP
 if (isNull player) then
@@ -16,7 +16,7 @@ if (isNull player) then
 	waitUntil {alive player;};
 	player enableSimulation false;
 	cutText ["A round is still in progress, please wait...","BLACK"];
-	waitUntil { sleep 0.1; !(_gameStart)};
+	waitUntil { _gameStart = gameState select 2; sleep 0.1; !(_gameStart)};
 	call fnc_resetMP;
 };
 
